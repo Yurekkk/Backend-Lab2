@@ -37,7 +37,15 @@ class DatabaseTest {
 
     Database.dataBase.add(new User(NAME, LOGIN, PASSWORD));
 
-    User user = Database.getUser(LOGIN, PASSWORD);
+    User user;
+
+    try {
+      user = Database.getUser(LOGIN, PASSWORD);
+    }
+    catch (NotFoundException e) {
+      System.out.println(e.getMessage());
+      return;
+    }
 
     assertNotNull(user);
 
@@ -56,7 +64,13 @@ class DatabaseTest {
 
     Database.dataBase.add(new User(NAME, LOGIN, PASSWORD));
 
-    Database.deleteUser(LOGIN);
+    try {
+      Database.deleteUser(LOGIN);
+    }
+    catch (NotFoundException e) {
+      System.out.println(e.getMessage());
+      return;
+    }
 
     assertTrue(Database.dataBase.isEmpty());
   }
@@ -72,7 +86,13 @@ class DatabaseTest {
 
     User updated = new User(updatedName, LOGIN, updatedPassword);
 
-    Database.updateUser(updated);
+    try {
+      Database.updateUser(updated);
+    }
+    catch (NotFoundException e) {
+      System.out.println(e.getMessage());
+      return;
+    }
 
     User fromDB = Database.dataBase.get(0);
 

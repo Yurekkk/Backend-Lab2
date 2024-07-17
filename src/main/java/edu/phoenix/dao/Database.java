@@ -15,16 +15,16 @@ public class Database {
     dataBase.add(new_user);
   }
 
-  public static User getUser(String login, String password) {
+  public static User getUser(String login, String password) throws NotFoundException {
     for (User user : dataBase) {
       if (Objects.equals(user.getLogin(), login) &&
           Objects.equals(user.getPassword(), password))
         return user;
     }
-    return null;
+    throw new NotFoundException("Пользователя с указанными данными нет в базе.");
   }
 
-  public static void deleteUser(String login) {
+  public static void deleteUser(String login) throws NotFoundException {
     ListIterator<User> iter = dataBase.listIterator();
     while (iter.hasNext()) {
       User user = iter.next();
@@ -33,9 +33,10 @@ public class Database {
         return;
       }
     }
+    throw new NotFoundException("Пользователя с указанными данными нет в базе.");
   }
 
-  public static void updateUser(User updated_user) {
+  public static void updateUser(User updated_user) throws NotFoundException {
     ListIterator<User> iter = dataBase.listIterator();
     while (iter.hasNext()) {
       User old_user = iter.next();
@@ -45,6 +46,7 @@ public class Database {
         return;
       }
     }
+    throw new NotFoundException("Пользователя с указанными данными нет в базе.");
   }
 
 }
